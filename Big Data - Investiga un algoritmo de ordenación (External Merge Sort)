@@ -1,0 +1,11 @@
+· El algoritmo "External Merge Sort" se suele emplear cuando hay que ordenar grandes volúmenes de datos que no caben en la memoria principal (RAM) y deben de residir en un almacenamiento secundario, como el disco duro o el SSD.
+
+· En el mejor caso, O(Nlog⁡^BN), ocurre cuando los datos se encuentran ordenados o casi ordenados. Aunque se puede mejorar la lectura de dichos datos, su estructuración permite seguir dividiendo los datos para, posteriormente, mezclarlos en pasadas consecutivas.
+
+ · En el mejor caso, 2N · (1 + [Nlog⁡^(B-1)(N/B), ocurre cuando los datos se encuentran en un orden invertido o completamente aleatorio. Se requiere la creación de los “runs” iniciales más unas [lgon^(B-1)(N/B)] pasadas de mezcla.
+
+· Si llega a ocurrir el caso promedio, el comportamiento resultaría ser sumamente estable, pues la distribución de los datos apenas afecta al número de pasadas de mezcla requeridas por los discos.
+
+· En cuanto si es adecuado o no en Big Data, se puede resumir la respuesta como un sí, pero con ciertos matices. Resulta útil por su independencia de la RAM, por su acceso secuencial y por ser altamente paralelizable, pero no suele ser del todo recomendable por culpa de los distintos tipos de escalamientos y el uso de mejores estructuras más modernas que esta.
+
+Lucía González Rosas - 29 de septiembre de 2026 - Big Data
