@@ -1,0 +1,29 @@
+{% load static %}
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f5ef">
+  <title>{% block title %}Bitácora de robótica{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'blog/site.css' %}">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="{% url 'home' %}" aria-label="Bitácora de robótica, portada">
+      <span class="brand-mark" aria-hidden="true">B/</span>
+      <span class="brand-name">BITÁCORA<br>DE ROBÓTICA</span>
+    </a>
+    <nav class="main-nav" aria-label="Navegación principal">
+      <a href="{% url 'home' %}#articulos">Artículos</a>
+    </nav>
+  </header>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="site-footer">
+    <span>BITÁCORA DE ROBÓTICA</span>
+    <span>Ideas sobre máquinas, percepción y movimiento.</span>
+  </footer>
+</body>
+</html>

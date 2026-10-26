@@ -1,0 +1,22 @@
+{% extends "blog/base.html" %}
+
+{% block title %}{{ article.title }} | Bitácora de robótica{% endblock %}
+
+{% block content %}
+<article class="article-page">
+  <a class="back-link" href="{% url 'home' %}"><span aria-hidden="true">←</span> Volver a los artículos</a>
+  <header class="article-header">
+    <p class="eyebrow"><span class="eyebrow-dot"></span> CUADERNO DE CAMPO · ROBÓTICA</p>
+    <h1>{{ article.title }}</h1>
+    <div class="article-byline">
+      <span>Por {{ article.author }}</span>
+      <span aria-hidden="true">·</span>
+      <time datetime="{{ article.published_at|date:'c' }}">{{ article.published_at|date:"j F Y" }}</time>
+    </div>
+  </header>
+  <div class="article-body">
+    {{ article.rendered_content }}
+  </div>
+  <a class="back-link article-back-link" href="{% url 'home' %}"><span aria-hidden="true">←</span> Volver a los artículos</a>
+</article>
+{% endblock %}

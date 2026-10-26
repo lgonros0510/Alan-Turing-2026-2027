@@ -1,0 +1,52 @@
+{% extends "blog/base.html" %}
+
+{% block title %}Bitácora de robótica | Artículos{% endblock %}
+
+{% block content %}
+<section class="intro" aria-labelledby="page-title">
+  <div class="intro-copy">
+    <p class="eyebrow"><span class="eyebrow-dot"></span> CUADERNO DE CAMPO · ROBÓTICA</p>
+    <h1 id="page-title">La robótica empieza con una <em>pregunta.</em></h1>
+    <p class="intro-description">Ideas para entender cómo perciben, deciden y se mueven las máquinas que construimos.</p>
+  </div>
+  <div class="intro-note" aria-label="Temas: percepción, diseño y movimiento">
+    <div class="note-orbit" aria-hidden="true"><span></span><span></span><span></span></div>
+    <p>OBSERVAR<br>DISEÑAR<br>VOLVER A PROBAR</p>
+    <span class="note-index">LAB / 01</span>
+  </div>
+</section>
+
+<section class="article-section" id="articulos" aria-labelledby="articles-title">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">LECTURAS RECIENTES</p>
+      <h2 id="articles-title">En el cuaderno</h2>
+    </div>
+    <span class="section-aside">ARTÍCULOS PUBLICADOS</span>
+  </div>
+
+  {% if articles %}
+    <ol class="article-list">
+      {% for article in articles %}
+        <li class="article-row">
+          <span class="article-number" aria-hidden="true">{{ forloop.counter|stringformat:"02d" }}</span>
+          <div class="article-copy">
+            <p class="article-meta"><time datetime="{{ article.published_at|date:'c' }}">{{ article.published_at|date:"j F Y" }}</time></p>
+            <h3><a href="{{ article.get_absolute_url }}">{{ article.title }}</a></h3>
+            <p class="article-excerpt">{{ article.summary }}</p>
+          </div>
+          <a class="article-link" href="{{ article.get_absolute_url }}" aria-label="Leer: {{ article.title }}">
+            <span aria-hidden="true">↗</span>
+          </a>
+        </li>
+      {% endfor %}
+    </ol>
+  {% else %}
+    <div class="empty-state">
+      <span class="empty-marker" aria-hidden="true">—</span>
+      <p>Todavía no hay artículos publicados.</p>
+      <span>Las próximas notas aparecerán aquí.</span>
+    </div>
+  {% endif %}
+</section>
+{% endblock %}

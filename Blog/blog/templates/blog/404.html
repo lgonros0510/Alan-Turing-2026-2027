@@ -1,0 +1,14 @@
+{% extends "blog/base.html" %}
+
+{% block title %}Artículo no encontrado | Bitácora de robótica{% endblock %}
+
+{% block content %}
+<section class="article-page" aria-labelledby="not-found-title">
+  <header class="article-header">
+    <p class="eyebrow"><span class="eyebrow-dot"></span> ERROR 404</p>
+    <h1 id="not-found-title">Esta página no se encuentra.</h1>
+    <p class="intro-description">El artículo puede no existir o todavía no estar publicado.</p>
+  </header>
+  <p><a class="back-link" href="{% url 'home' %}"><span aria-hidden="true">←</span> Volver a los artículos</a></p>
+</section>
+{% endblock %}
