@@ -43,4 +43,4 @@ Quedan fuera las cuentas de lectores, comentarios, suscripciones, boletines, bus
 
 ## Decisiones conocidas y pendientes
 
-La primera versión estará en español, tratará sobre robótica y contará con una persona editora y una presentación principal del autor. Se implementará con Django, modelos y migraciones, plantillas del servidor y SQLite en desarrollo. La identidad visual, el contenido definitivo, el dominio, el despliegue y la base de datos de producción se definirán más adelante.
+La primera versión estará en español, tratará sobre robótica y contará con una persona editora y una presentación principal del autor. Además de las páginas web, expondrá una API REST para leer artículos publicados y permitir que administradores existentes creen borradores mediante un token. Se implementará con Django, Django REST Framework, el modelo de artículos existente, plantillas del servidor y SQLite en desarrollo. La identidad visual, el contenido definitivo, el dominio, el despliegue y la base de datos de producción se definirán más adelante.
