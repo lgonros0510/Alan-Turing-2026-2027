@@ -30,6 +30,14 @@ Definir qué incluye la primera versión del blog de robótica y qué queda fuer
 - Mantener los artículos no publicados fuera de las páginas públicas.
 - Incluir contenido de ejemplo sobre robótica, reemplazable o eliminable desde la gestión de contenido.
 
+### API REST
+
+- `GET /api/articulos/` lista públicamente los artículos publicados que ya están disponibles.
+- `GET /api/articulos/<id>/` devuelve un artículo publicado disponible; los borradores y artículos futuros responden con HTTP 404.
+- `POST /api/articulos/` crea únicamente borradores y requiere un token de Django REST Framework perteneciente a una persona administradora existente.
+- El POST recibe `titulo` y `cuerpo` y responde con `id`, `titulo`, `cuerpo` y `estado` (`borrador` para el artículo creado).
+- La API conserva el modelo `Article`: deriva un slug único del título, usa «Equipo editorial» como autoría y deja que el modelo complete la fecha. No introduce usuarios ni modifica el esquema del artículo.
+
 ### Datos de los artículos
 
 Cada artículo incluye, como mínimo, título, slug, contenido, autoría, fecha de publicación y estado de publicación. La primera versión contempla una presentación principal del autor.
@@ -51,12 +59,15 @@ Cada artículo incluye, como mínimo, título, slug, contenido, autoría, fecha 
 - Buscador.
 - Flujos editoriales avanzados, como revisión, programación de publicaciones o múltiples roles.
 - Edición de contenido por visitantes o acceso anónimo a operaciones administrativas.
+- Creación de usuarios para la API, publicación de artículos desde la API y métodos de autenticación distintos del token integrado para administradores existentes.
 
 ## Rutas de referencia
 
 - `/`: portada y artículos recientes.
 - `/sobre-mi/`: presentación del autor.
 - `/articulos/<slug>/`: página de un artículo.
+- `/api/articulos/`: lista de artículos y creación autenticada de borradores.
+- `/api/articulos/<id>/`: detalle JSON de un artículo publicado.
 - `/admin/`: administración restringida de Django.
 
 ## Supuestos y decisiones pendientes

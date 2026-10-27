@@ -57,6 +57,17 @@ Estos criterios definen las condiciones observables para aceptar la primera vers
 - **Dado** que se crea o edita un artículo, **entonces** se pueden mantener su título, slug, contenido, autoría, fecha de publicación y estado de publicación.
 - **Dado** que se configura la presentación del autor, **entonces** se puede mantener un texto breve y editable para la presentación principal del sitio.
 
+## CA-10: API REST de artículos (RF-06)
+
+- **Dado** que una persona consulta `GET /api/articulos/` sin autenticarse, **cuando** existen artículos publicados disponibles, **entonces** recibe HTTP 200 y una respuesta JSON que los lista sin incluir borradores ni artículos con fecha futura.
+- **Dado** que se consulta `GET /api/articulos/<id>/` para un artículo publicado disponible, **entonces** se recibe HTTP 200 con JSON que incluye `id`, `titulo`, `cuerpo` y `estado` (`publicado`).
+- **Dado** que se consulta el detalle de un borrador, una publicación futura o un identificador inexistente, **entonces** la API responde HTTP 404 sin revelar su contenido.
+- **Dado** que una persona intenta `POST /api/articulos/` sin credenciales válidas de una persona administradora, **entonces** la API rechaza la petición y no crea ningún artículo.
+- **Dado** que una persona administradora autenticada con su token envía `titulo` y `cuerpo`, **cuando** los datos son válidos, **entonces** recibe HTTP 201 con `id`, `titulo`, `cuerpo` y `estado` (`borrador`), y el artículo persiste como no publicado.
+- **Dado** que el modelo exige otros campos al crear un artículo, **entonces** la API genera un slug único, asigna la autoría «Equipo editorial» y conserva los valores predeterminados del modelo para los demás campos.
+- **Dado** que faltan campos requeridos o sus valores no son válidos, **entonces** la API responde HTTP 400 y no crea ningún artículo.
+- **Entonces** la API no permite publicar artículos, no modifica el modelo `Article` y no crea cuentas o sistemas de usuarios.
+
 ## Documentos relacionados
 
 - [PRD](../PRD.md)

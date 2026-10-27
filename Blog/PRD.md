@@ -26,6 +26,7 @@ No habrá cuentas públicas ni registro de lectores. Para mantener el contenido 
 5. Diseño adaptable, legible y accesible, con prioridad en el contenido.
 6. Contenido inicial de ejemplo que pueda sustituirse.
 7. Gestión básica del contenido mediante el panel administrativo de Django.
+8. API REST para consultar artículos publicados y crear borradores con el token de una persona administradora existente.
 
 ### Excluido
 
@@ -35,6 +36,7 @@ No habrá cuentas públicas ni registro de lectores. Para mantener el contenido 
 - Buscador.
 - Flujos editoriales avanzados, como revisión, programación de publicaciones o múltiples roles.
 - Funciones de interacción social.
+- Registro público, creación de usuarios para la API y mecanismos de autenticación distintos del token de Django REST Framework asociado a una cuenta administradora existente.
 
 ## 5. Requisitos funcionales
 
@@ -89,6 +91,21 @@ El editor podrá crear, editar y retirar artículos y actualizar el texto de «S
 - Los artículos no publicados no aparecen en las páginas públicas.
 - No se ofrece un proceso de registro público.
 
+### RF-06: Consultar artículos y crear borradores mediante la API
+
+La API REST ofrecerá `GET /api/articulos/` para listar artículos publicados y `GET /api/articulos/<id>/` para consultar un artículo publicado. También ofrecerá `POST /api/articulos/` para crear un borrador mediante una cuenta administradora existente de Django, autenticada con un token de Django REST Framework.
+
+El POST recibirá `titulo` y `cuerpo`, guardará siempre el artículo como no publicado y responderá con `id`, `titulo`, `cuerpo` y `estado`. El estado devuelto será `publicado` o `borrador`. Para completar los campos obligatorios del modelo existente, la API generará un slug único a partir del título y asignará la autoría «Equipo editorial»; el extracto vacío y la fecha predeterminada del modelo se conservarán.
+
+**Criterios de aceptación**
+
+- Las lecturas de la API son públicas y no incluyen borradores ni publicaciones futuras.
+- El detalle de un artículo que no está publicado responde con HTTP 404.
+- El POST sin token válido de una persona administradora no crea artículos.
+- El POST autenticado con un token de una persona administradora crea un borrador y responde con los cuatro campos JSON especificados.
+- Los datos obligatorios ausentes o inválidos se rechazan con HTTP 400 y no crean artículos.
+- La API no permite publicar artículos ni crear cuentas.
+
 ## 6. Requisitos de contenido y datos
 
 ### Artículo
@@ -126,6 +143,7 @@ La entrega incluirá contenido de ejemplo relacionado con robótica. Este conten
 - **Backend y renderizado:** Django, con vistas y plantillas del servidor.
 - **Persistencia:** modelos Django y migraciones para artículos y presentación del autor.
 - **Gestión editorial:** Django Admin, restringido a usuarios autorizados.
+- **API:** Django REST Framework; autenticación por token integrada para la creación de borradores y permisos administrativos de Django. Los artículos siguen almacenándose en el modelo existente.
 - **Interfaz:** plantillas HTML semánticas y CSS adaptable; JavaScript solo si una necesidad concreta lo justifica.
 - **Base de datos:** SQLite para desarrollo inicial. La elección de base de datos para producción queda pendiente de las necesidades de despliegue.
 
@@ -136,6 +154,8 @@ La estructura exacta de aplicaciones, versiones de Django y configuración de de
 - `/` — portada y artículos recientes.
 - `/sobre-mi/` — presentación del autor.
 - `/articulos/<slug>/` — detalle de un artículo.
+- `/api/articulos/` — lista de artículos publicados y creación autenticada de borradores.
+- `/api/articulos/<id>/` — detalle JSON de un artículo publicado.
 - `/admin/` — panel administrativo de Django, con acceso restringido.
 
 ## 10. Métricas de éxito
